@@ -1,0 +1,30 @@
+<h2 class="content-subhead">Search</h2>
+
+<form action="/search" method="get">
+	<input name="query" value="<%= params[:query] %>">
+	<button type="submit">Search</button>
+</form>
+
+<div>
+<% query = params[:query] %>
+<% if query%>
+	<% selected = find_in_all_text(query) %>
+		<% if selected %>
+			<h2 class="content-subhead">Results for "<%=query%>"</h2>
+					<% selected.each do |num| %>
+					<ul class="pure-menu-list">
+					<li><%=display_chp_num_and_name(num)%></li>
+						
+						<% each_paragraph(num) do |par, ind| %>
+						<% path = "/chapters/#{num}#par_num#{ind}"%>
+							<ul>
+								<li><a href=<%= path %>><%= in_paragraphs(par) %></a></li>
+							</ul>
+						<% end %>
+						</ul>
+      		<% end %>
+		<% else %>
+			<h2 class="content-subhead">Sorry, no matches were found.</h2>
+		<% end %>
+<% end %>
+</div>
