@@ -1,6 +1,6 @@
 require "tilt/erubis"
 require "sinatra"
-require "sinatra/reloader"
+require "sinatra/reloader" if development?
 
 before do
   @contents = File.readlines("data/toc.txt")
@@ -11,9 +11,6 @@ get "/" do
 
   erb :home
 end
-
-# get "/test" do
-# end
 
 get "/chapters/:number" do
   number = params[:number].to_i
